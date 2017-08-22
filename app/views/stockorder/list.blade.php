@@ -79,7 +79,7 @@
 		<td>{{$item->send_time}}</td>
 		<td>{{$item->company_name}}:{{$item->company_faren}}</td>
 		<td>{{$item->company_sign}}</td>
-		<td>{{$item->goods_number}}</td>
+		<td>{{$item->goods_number_g}}</td>
 		<td>{{$item->goods_desc}}</td>
 		<td>
 			@foreach ($item->stockValues as $v)
