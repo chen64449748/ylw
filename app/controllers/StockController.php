@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class StockController extends BaseController 
 {
@@ -105,10 +105,7 @@ class StockController extends BaseController
 				'reson' => $reson
 			);
 
-			$stock_order_update = array(
-				'price'=> $price,
-				'price_total' => $price * (int)$stock_order->stock,
-			);
+			
 			
 			if ($stock_order->stock != $stock) {
 				// 库存改动
@@ -119,6 +116,10 @@ class StockController extends BaseController
 				$stock_order_update['stock'] = $stock;
 			}
 
+			$stock_order_update = array(
+				'price'=> $price,
+				'price_total' => $price * (int)$stock,
+			);
 			// 计算总计
 			StockOrder::where('id', $stock_id)->update($stock_order_update);
 
