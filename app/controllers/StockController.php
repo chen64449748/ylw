@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class StockController extends BaseController 
 {
@@ -107,18 +107,29 @@ class StockController extends BaseController
 
 			$stock_order_update = array(
 				'price'=> $price,
-				'price_total' => $price * (int)$stock_order->stock,
+				'price_total' => $price * (int)$stock,
 			);
 			
 			if ($stock_order->stock != $stock) {
 				// 库存改动
-				// 先返回库存
-				Stock::where('goods_id', $stock_order->goods_id)->where('price_id', $stock_order->price_id)->where('id', $stock_order->stock_id)->increment('stock', $stock_order->stock);
-				// 减去新库存
-				Stock::where('goods_id', $stock_order->goods_id)->where('price_id', $stock_order->price_id)->where('id', $stock_order->stock_id)->decrement('stock', $stock);
+
+				// 如果出库
+				if ($stock_order->stock_type == 2) {
+					// 先返回库存
+					Stock::where('goods_id', $stock_order->goods_id)->where('price_id', $stock_order->price_id)->where('id', $stock_order->stock_id)->increment('stock', $stock_order->stock);
+					// 减去新库存
+					Stock::where('goods_id', $stock_order->goods_id)->where('price_id', $stock_order->price_id)->where('id', $stock_order->stock_id)->decrement('stock', $stock);
+				} else if ($stock_order->stock_type == 1) {
+					// 先减去新库存
+					Stock::where('goods_id', $stock_order->goods_id)->where('price_id', $stock_order->price_id)->where('id', $stock_order->stock_id)->decrement('stock', $stock_order->stock);
+					// 再返回库存
+					Stock::where('goods_id', $stock_order->goods_id)->where('price_id', $stock_order->price_id)->where('id', $stock_order->stock_id)->increment('stock', $stock);
+				}
+				
 				$stock_order_update['stock'] = $stock;
 			}
 
+			
 			// 计算总计
 			StockOrder::where('id', $stock_id)->update($stock_order_update);
 
