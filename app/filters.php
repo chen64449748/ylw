@@ -48,6 +48,17 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('login', function()
+{
+	if (!Session::get('manage')) {
+
+		if (Request::ajax()) {
+			return Response::json(array('status'=> 0, 'message'=> '已经退出系统请重新登陆'));
+		}
+
+		return Redirect::to('login');
+	}
+});
 
 Route::filter('auth.basic', function()
 {
