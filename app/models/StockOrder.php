@@ -214,8 +214,8 @@ class StockOrder extends Eloquent
 					$select->where('stock_order.stock_type', (int)$value);
 					break;
                 case 'created_at':
-                    $select->where('stock_order.send_time', '>', $value.' 00:00:00');
-                    $select->where('stock_order.send_time', '<', $value.' 23:59:59');
+                    $select->where('stock_order.send_time', '>=', $value.' 00:00:00');
+                    $select->where('stock_order.send_time', '<=', $value.' 23:59:59');
                     break;
 			}
 		}
