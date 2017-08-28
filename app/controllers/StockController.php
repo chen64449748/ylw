@@ -51,6 +51,18 @@ class StockController extends BaseController
 			'created_at'=> $created_at,
 		);
 
+		$append = array(
+			'company_sign_id' => $company_sign_id,
+			'company_id' => $company_id,
+			'company_sign' => $company_sign,
+			'company_name' => $company_name,
+			'goods_number' => $goods_number,
+			'stock_type' => $stock_type,
+			'created_at' => $created_at,
+		);
+
+		$stockOrder->appends($append);
+
 		return View::make('stockorder.list', $view_data);
 	}
 

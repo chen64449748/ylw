@@ -41,6 +41,13 @@ class SignController extends BaseController
 			'company_sign' => $company_sign,
 		);
 
+		$append = array(
+			'company_id' => $company_id,
+			'company_sign' => $company_sign,
+		);
+
+		$sign->appends($append);
+
 		return View::make('sign.list', $view_data);
 	}
 

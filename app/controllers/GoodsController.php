@@ -39,6 +39,15 @@ class GoodsController extends BaseController
 			'company_sign_id' => $company_sign_id,
 		);
 
+		$append = array(
+			'goods_desc' => $goods_desc,
+			'goods_number' => $goods_number,
+			'company_id' => $company_id,
+			'company_sign_id' => $company_sign_id,
+		);
+
+		$goods->appends($append);
+
 		return View::make('goods.list', $view_data);
 	}
 

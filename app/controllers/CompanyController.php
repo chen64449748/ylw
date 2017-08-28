@@ -33,6 +33,12 @@ class CompanyController extends BaseController
 			'company_name' => $company_name,
 		);
 
+		$append = array(
+			'is_make' => $is_make,
+			'company_name' => $company_name,
+		);
+
+		$company->appends($append);
 		return View::make('company.list', $view_data);
 	}
 
