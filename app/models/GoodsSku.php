@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 
 
 
@@ -68,6 +68,8 @@ class GoodsSku extends Eloquent
 			GoodsSku::whereIn('sku_value_id', $sku_value_ids)->where('goods_id', $goods_id)->update(array('is_show'=> 0));
 		}
 		// 插入关联
-		GoodsSku::insert($insert_goods_sku);
+		if ($insert_goods_sku) {
+			GoodsSku::insert($insert_goods_sku);
+		}	
 	} 
 }
