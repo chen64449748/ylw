@@ -249,4 +249,41 @@ class StockController extends BaseController
 
 
 	}
+
+	public function addFinance()
+	{
+		$ids = Input::get('ids', '');
+
+		DB::beginTransaction();
+
+		$stock_order_m = new StockOrder();
+		try {
+
+			$stock_orders = $stock_order_m->whereIn('id', $ids)->get();
+
+			if (!$stock_orders) {
+				throw new Exception("没有找到出入库单");
+			}
+
+			$finance = array();
+			$finance_detail = array();
+
+			$in = array();
+			$out = array();
+
+			foreach ($stock_orders as $key => $value) {
+				if ($value->stock_type == 1) {
+					$in[] = $value;
+				} else if ($value->stock_type == 2) {
+					$out[] = $value;
+				}
+			}
+
+			DB::commit();	
+			return Response::json(array('status'=> 1, 'message'=> '结算成功'));
+		} catch (Exception $e) {
+			DB::rollback();
+			return Response::json(array('status'=> 0, 'message'=> '结算失败:'.$e->getMessage()));
+		}
+	}
 }

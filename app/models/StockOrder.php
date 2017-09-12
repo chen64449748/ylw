@@ -189,6 +189,9 @@ class StockOrder extends Eloquent
 
 		foreach ($type as $key => $value) {
 			switch ($key) {
+                case 'ids':
+                    $select->whereIn('stock_order.id', $value);
+                    break;
 				case 'id':
 					$select->where('stock_order.id', (int)$value);
 					break;		

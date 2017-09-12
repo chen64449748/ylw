@@ -5663,3 +5663,41 @@ ul.timeline li > .date {
     display: none;
   }
 }
+
+.finance_order {  
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.finance_order + .finance_order {
+  margin-top: 16px;
+}
+.border9 {
+  border: 1px #d9d9d9 solid;
+}
+
+.order_title {
+  /*border-bottom : 1px #d9d9d9 solid;*/
+  padding: 10px 24px;
+}
+
+.order_item {
+  box-sizing: border-box;
+  padding: 10px 0px;
+  float: left;
+  text-align: center;
+  border-top: 1px #d9d9d9 solid;
+  font-size: 14px; 
+}
+
+.order_foot {
+  text-align: right;
+  padding: 10px 10px 10px 0;
+  border-top: 1px #d9d9d9 solid;
+}
+.order_item + .order_item {
+  border-left: 1px #d9d9d9 solid;
+}
+
+.clr {
+  clear: both;
+}

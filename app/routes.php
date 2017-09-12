@@ -56,5 +56,8 @@ Route::group(array('before'=> 'login'), function() {
 	// 数量类型
 	Route::post('numType/list', array('as' => 'numType.list', 'uses'=> 'NumtypeController@numTypeList'));
 
+
+	// 财务
+	Route::get('finance/list', array('as'=> 'finance.list', 'uses'=> 'FinanceController@financeList'));
 });
 

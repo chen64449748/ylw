@@ -47,6 +47,10 @@
 	</form>
 </div>
 
+<div class="page-head">
+	<input type="checkbox" class="allc"> <button class="btn btn-primary">结算</button>
+</div>
+
 <table class="table table-striped">
 	<tr>
 		<th>#</th>
@@ -62,13 +66,18 @@
 		<th>单价</th>
 		<th>总价</th>
 		<th>备注</th>
-		<th>查看</th>
+		<th>操作</th>
 	</tr>
 
 	@foreach ($stockOrder as $item)
 	
 	<tr>
-		<td>{{$item->id}}</td>
+		<td>
+			@if (!$item->is_balance)
+			<input type="checkbox" class="c" value="{{$item->id}}">
+			@endif
+			{{$item->id}}
+		</td>
 		<td>
 			@if ($item->stock_type == 2)
 			出库
@@ -93,6 +102,9 @@
 		<td>{{$item->remake}}</td>
 		<td>
 			<a href="/stock/order/detail?id={{$item->id}}">查看</a>
+			@if (!$item->is_balance)
+			<a href="javascript:void(0)" class="jiesuan btn btn-primary" data-id="{{$item->id}}">结算</a>
+			@endif
 		</td>
 	</tr>
 
@@ -114,5 +126,13 @@ $('#time').datetimepicker({
 	minView: 2,
 });
 
+
+$('.allc').change(function () {
+	var t = $(this).prop('checked');
+	$('.c').each(function () {
+		$(this).prop('checked', t);
+	});
+
+});
 </script>
 @stop
