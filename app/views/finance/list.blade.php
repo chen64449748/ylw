@@ -36,7 +36,7 @@
 			@endforeach
 		</select>
 
-		<input type="text" id="time" name="created_at" class="input"  placeholder="选择查看时间" value="{{$created_at}}">
+		<input type="text" id="time" name="created_at" class="input"  placeholder="选择结算时间" value="{{$created_at}}">
 
 
 		<input type="submit" class="btn btn-primary" value="搜索">
@@ -56,18 +56,29 @@
 			品牌：{{$item->sign->company_sign}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
 			结算时间：{{$item->created_at}}
 		</div>
+
+		<div>
+			<div class="order_item" style="width: 30%;">
+				货号
+			</div>
+			<div class="order_item" style="width: 10%;">数量/件</div>
+			<div class="order_item" style="width: 20%;">发货时间</div>
+			<div class="order_item" style="width: 20%;">单价/元</div>
+			<div class="order_item" style="width: 20%;">合计/元</div>
+			<div class="clr"></div>
+		</div>
 		@foreach ($item['finance_detail'] as $item_detail)
 		<div>
 			<div class="order_item" style="width: 30%;">
-				货号：{{$item_detail->goods_number}}
+				{{$item_detail->goods_number}}
 				@foreach ($item_detail->stockValues as $v)
 				{{$v->value}}
 				@endforeach
 			</div>
 			<div class="order_item" style="width: 10%;">{{$item_detail->stock}}件</div>
 			<div class="order_item" style="width: 20%;">{{$item_detail->send_time}}</div>
-			<div class="order_item" style="width: 20%;">单价：{{$item_detail->price}}元</div>
-			<div class="order_item" style="width: 20%;">合计：{{$item_detail->price_total}}元</div>
+			<div class="order_item" style="width: 20%;">{{$item_detail->price}}元</div>
+			<div class="order_item" style="width: 20%;">{{$item_detail->price_total}}元</div>
 			<div class="clr"></div>
 		</div>
 		@endforeach

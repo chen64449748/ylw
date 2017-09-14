@@ -35,7 +35,9 @@ class StockController extends BaseController
 		$goods_id && $type['goods_id'] = $goods_id;
 		$stock_type && $type['stock_type'] = $stock_type;
 
-		$stockOrder = $stockOrder_m->getListPage($type);
+		// 排序
+		$order = array('send_time'=> 'desc');
+		$stockOrder = $stockOrder_m->getListPage($type, 15, array(), $order);
 
 		$view_data = array(
 			'sign' => $sign,
@@ -87,7 +89,7 @@ class StockController extends BaseController
 
 		return View::make('stockorder.detail', $view_data);
 	}
-
+	// 修改出入库单
 	public function stockOrderDetailData()
 	{
 		$stock_id = Input::get('id', '');
@@ -99,6 +101,10 @@ class StockController extends BaseController
 		try {
 			if (!$stock_order = StockOrder::find($stock_id)) {
 				throw new Exception("没有找到出入库单");
+			}
+
+			if ($stock_order->is_balance == 1) {
+				throw new Exception("已结算的单不可以修改");
 			}
 
 			if (!is_numeric($stock)) {
@@ -259,11 +265,13 @@ class StockController extends BaseController
 		$stock_order_m = new StockOrder();
 		try {
 
-			$stock_orders = $stock_order_m->whereIn('id', $ids)->get();
+			$stock_orders = $stock_order_m->whereIn('id', $ids)->where('is_balance', 0)->get();
 
-			if (!$stock_orders) {
-				throw new Exception("没有找到出入库单");
+			if (!isset($stock_orders[0])) {
+				throw new Exception("没有找到可以结算的出入库单");
 			}
+
+			$update_ids = array();
 
 			$finance = array();
 			$finance_detail = array();
@@ -272,12 +280,23 @@ class StockController extends BaseController
 			$out = array();
 
 			foreach ($stock_orders as $key => $value) {
+				$update_ids[] = $value->id;
 				if ($value->stock_type == 1) {
-					$in[] = $value;
+					$in[$value->company_sign_id][] = $value;
 				} else if ($value->stock_type == 2) {
-					$out[] = $value;
+					$out[$value->company_sign_id][] = $value;
 				}
 			}
+
+			if ($in) {
+				$this->inFinance($in);
+			}
+
+			if ($out) {
+				$this->outFinance($out);
+			}
+
+			$stock_order_m->whereIn('id', $update_ids)->update(array('is_balance'=> 1, 'balance_time'=> date('Y-m-d H:i:s')));
 
 			DB::commit();	
 			return Response::json(array('status'=> 1, 'message'=> '结算成功'));
@@ -285,5 +304,101 @@ class StockController extends BaseController
 			DB::rollback();
 			return Response::json(array('status'=> 0, 'message'=> '结算失败:'.$e->getMessage()));
 		}
+	}
+
+	#结算所有
+	public function addFinanceDay()
+	{
+		set_time_limit(0);
+		$date = Input::get('date', '');
+
+		DB::beginTransaction();
+
+		$stock_order_m = new StockOrder();
+		try {
+
+			$type = array(
+				'is_balance' => 0,
+			);
+
+			$date && $type['created_at'] = $date; // 发货时间
+
+			$stock_orders = $stock_order_m->getList($type);
+
+			if (!isset($stock_orders[0])) {
+				throw new Exception("没有找到可以结算的出入库单");
+			}
+
+			$update_ids = array();
+
+			$finance = array();
+			$finance_detail = array();
+
+			$in = array();
+			$out = array();
+
+			foreach ($stock_orders as $key => $value) {
+				$update_ids[] = $value->id;
+				if ($value->stock_type == 1) {
+					$in[$value->company_sign_id][] = $value;
+				} else if ($value->stock_type == 2) {
+					$out[$value->company_sign_id][] = $value;
+				}
+			}
+
+			if ($in) {
+				$this->inFinance($in);
+			}
+			if ($out) {
+				$this->outFinance($out);
+			}
+			$stock_order_m->whereIn('id', $update_ids)->update(array('is_balance'=> 1, 'balance_time'=> date('Y-m-d H:i:s')));
+
+			DB::commit();	
+			return Response::json(array('status'=> 1, 'message'=> '结算成功'));
+		} catch (Exception $e) {
+			DB::rollback();
+			return Response::json(array('status'=> 0, 'message'=> '结算失败:'.$e->getMessage()));
+		}
+	}
+
+	private function inFinance($in) {
+		foreach ($in as $company_sign_id => $iv) {
+					
+			$finance_in = array(
+				'type' => 2,
+				'company_id' => $iv[0]->company_id,
+				'company_sign_id' => $company_sign_id,
+				'price' => 0,
+			);
+
+			$finance_in_detail = array();
+			foreach ($iv as $s_order) {
+				$finance_in['price'] += (float)$s_order->price_total;
+				$finance_in_detail[]['id'] = $s_order->id;
+			}
+
+		}
+		Finance::add($finance_in, $finance_in_detail);
+	}
+
+	private function outFinance($out) {
+		foreach ($out as $company_sign_id => $iv) {
+					
+			$finance_out = array(
+				'type' => 1,
+				'company_id' => $iv[0]->company_id,
+				'company_sign_id' => $company_sign_id,
+				'price' => 0,
+			);
+
+			$finance_out_detail = array();
+			foreach ($iv as $s_order) {
+				$finance_out['price'] += (float)$s_order->price_total;
+				$finance_out_detail[]['id'] = $s_order->id;
+			}
+
+		}
+		Finance::add($finance_out, $finance_out_detail);
 	}
 }

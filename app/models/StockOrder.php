@@ -54,7 +54,7 @@ class StockOrder extends Eloquent
     }
 
 
-    public function getListPage($type = array(), $size = 15, $fetch = array())
+    public function getListPage($type = array(), $size = 15, $fetch = array(), $orderBy = array())
     {
 
     	$select = $this->select($fetch ? $fetch : array('stock_order.*', 'goods.goods_number as goods_number_g', 'goods.goods_desc', 'company.company_name', 'company.company_faren', 'company_sign.company_sign', 'goods.goods_number'));
@@ -65,7 +65,7 @@ class StockOrder extends Eloquent
 
 
     	$this->_where($select, $type);
-
+        $this->_orderBy($select, $orderBy);
     	return $select->paginate($size);
     }
 
@@ -159,6 +159,9 @@ class StockOrder extends Eloquent
                     $s_o_s = array();
                     $sku_value = SkuValue::find($sosv);
                     if ($sku_value) {
+                        if ($sku_value->value == '无') {
+                            continue; # 无属性不添加
+                        }
                         $s_o_s['value'] = $sku_value->sku->sku_name.':'.$sku_value->value;
                         $s_o_s['stock_order_id'] = $stock_order_id;
                         array_push($insert_stock_order_sku_value, $s_o_s);
@@ -183,6 +186,17 @@ class StockOrder extends Eloquent
    
     	}
 
+    }
+
+    private function _orderBy(&$select, $orderBy)
+    {
+        foreach ($orderBy as $key => $value) {
+            switch ($key) {
+                case 'send_time':
+                    $select->orderBy($key, $value);
+                    break;
+            }
+        }
     }
 
 	private function _where(&$select, $type) {
@@ -219,6 +233,9 @@ class StockOrder extends Eloquent
                 case 'created_at':
                     $select->where('stock_order.send_time', '>=', $value.' 00:00:00');
                     $select->where('stock_order.send_time', '<=', $value.' 23:59:59');
+                    break;
+                case 'is_balance':
+                    $select->where('stock_order.is_balance', (int)$value);
                     break;
 			}
 		}

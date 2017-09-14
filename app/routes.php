@@ -52,6 +52,8 @@ Route::group(array('before'=> 'login'), function() {
 	Route::post('stock/order/get', array('as'=> 'stock.order', 'uses'=> 'StockController@stockOrderGet'));
 	Route::get('stock/order/detail', array('as'=> 'stock.order.detail', 'uses'=> 'StockController@stockOrderDetail'));
 	Route::post('stock/order/detail/data', array('as'=> 'stock.order.detail.data', 'uses'=> 'StockController@stockOrderDetailData'));
+	Route::post('stock/finance/add', array('as'=> 'stock.finance.add', 'uses'=> 'StockController@addFinance'));
+	Route::post('stock/finance/add/day', array('as'=> 'stock.finance.add.day', 'uses'=> 'StockController@addFinanceDay'));
 
 	// 数量类型
 	Route::post('numType/list', array('as' => 'numType.list', 'uses'=> 'NumtypeController@numTypeList'));

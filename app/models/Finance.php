@@ -43,6 +43,7 @@ class Finance extends Eloquent
 			'created_at' => date('Y-m-d H:i:s'),
 			'price' => $finance['price'],
 			'company_id' => $finance['company_id'],
+			'company_sign_id' => $finance['company_sign_id'],
 		);
 
 		$finance_id = Finance::insertGetId($finance_insert);

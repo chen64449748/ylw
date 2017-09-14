@@ -389,3 +389,35 @@ function skuSelect(goods_id, sku_select)
 		}
 	});
 }
+
+function checkall()
+{
+	$('.iCheck-helper').click(function () {
+		var ck = $(this).parent('.icheckbox_square-blue').find('input[type=checkbox]');
+	
+		if (!ck.hasClass('allc')) {
+			return;
+		}
+
+		var f = ck.prop('checked');
+
+		$('.iCheck-helper').each(function () {
+			var ac = $(this).parent('.icheckbox_square-blue').find('input[type=checkbox]');
+			
+			if (ac.hasClass('allc')) {
+				return;
+			}
+
+			ac.prop('checked', f);
+			var ac_div = $(this).parent('.icheckbox_square-blue');
+
+			if (ac_div.hasClass('checked')) {
+				ac_div.removeClass('checked');
+			} else {
+				ac_div.addClass('checked');
+			}
+
+		});
+	});
+	
+}

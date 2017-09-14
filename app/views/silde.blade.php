@@ -31,3 +31,9 @@
 		<li @if ($action == 'stock/add') class="active" @endif><a href="/stock/add">出入库</a></li>
 	</ul>
 </li>
+
+<li><a href="#"><i class="fa fa-list-alt"></i><span>财务</span></a>
+	<ul class="sub-menu">
+		<li @if ($action == 'finance/list') class="active" @endif><a href="/finance/list" >财务列表</a></li>
+	</ul>
+</li>

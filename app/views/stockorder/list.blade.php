@@ -48,7 +48,11 @@
 </div>
 
 <div class="page-head">
-	<input type="checkbox" class="allc"> <button class="btn btn-primary">结算</button>
+	<input type="checkbox" class="allc"> 
+	<button class="btn btn-primary finance_all">结算打勾项</button>
+	<button class="btn btn-primary finance_day">日结算(按照所选时间：不选时间结算今日)</button>
+	<button class="btn btn-primary finance_now">结算所有(结算所有 只生成一个结算单)</button>
+	<span>点一次 生成一张结算单</span>
 </div>
 
 <table class="table table-striped">
@@ -101,8 +105,8 @@
 		<td>{{$item->price_total}}</td>
 		<td>{{$item->remake}}</td>
 		<td>
-			<a href="/stock/order/detail?id={{$item->id}}">查看</a>
 			@if (!$item->is_balance)
+			<a href="/stock/order/detail?id={{$item->id}}">查看</a>
 			<a href="javascript:void(0)" class="jiesuan btn btn-primary" data-id="{{$item->id}}">结算</a>
 			@endif
 		</td>
@@ -134,5 +138,142 @@ $('.allc').change(function () {
 	});
 
 });
+
+$('input').iCheck('destroy');
+$('input').iCheck({
+	checkboxClass: 'icheckbox_square-blue',
+	radioClass: 'iradio_square-blue',
+	increaseArea: '20%' // optional
+});
+checkall();
+
+$('.finance_now').click(function () {
+	var txt= "确定结算所有?";
+	var option = {
+		title: "结算",
+		btn: parseInt("0011",2),
+		onOk: function(){
+			LayerShow('');
+			$.post('/stock/finance/add/day', {}, function (data) {
+				LayerHide();
+				if (data.status == 1) {
+					window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.success);
+					setTimeout(function () {
+						window.location.href = '/stock/order/list';
+					}, 800);
+				} else {
+					return window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.error);
+				}
+			});
+		},
+	}
+
+	window.wxc.xcConfirm(txt, "custom", option);
+});
+
+$('.finance_day').click(function () {
+	var date = $('input[name=created_at]').val();
+	if (!date) {
+		var now = new Date();
+		var month = now.getMonth()+1;
+		if (month < 10) {
+			month = '0' + month;
+		}
+		date = now.getFullYear() + '-' + month + '-' + now.getDate();
+	}
+
+	var txt= "确定结算"+date+'?';
+	var option = {
+		title: "结算",
+		btn: parseInt("0011",2),
+		onOk: function(){
+			LayerShow('');
+			$.post('/stock/finance/add/day', {date: date}, function (data) {
+				LayerHide();
+				if (data.status == 1) {
+					window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.success);
+					setTimeout(function () {
+						window.location.href = '/stock/order/list';
+					}, 800);
+				} else {
+					return window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.error);
+				}
+			});
+		},
+	}
+
+	window.wxc.xcConfirm(txt, "custom", option);
+
+});
+
+$('.jiesuan').click(function () {
+	var ids = [];
+	var id  = $(this).data('id');
+	ids.push(id);
+
+	var txt= "确定提交？";
+	var option = {
+		title: "结算",
+		btn: parseInt("0011",2),
+		onOk: function(){
+			LayerShow('');
+			$.post('/stock/finance/add', {ids: ids}, function (data) {
+				LayerHide();
+				if (data.status == 1) {
+					window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.success);
+					setTimeout(function () {
+						window.location.href = '/stock/order/list';
+					}, 800);
+				} else {
+					return window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.error);
+				}
+			});
+		},
+	}
+
+	window.wxc.xcConfirm(txt, "custom", option);
+});
+
+$('.finance_all').click(function () {
+	if ($('input[type=checkbox]:checked').size() == 0) {
+		return;
+	}
+	var ids = [];
+	$('input[type=checkbox]:checked').each(function () {
+		if ($(this).hasClass('allc')) {
+			return;
+		}
+		ids.push($(this).val());
+	});
+
+	if (ids.length == 0) {
+		return;
+	}
+
+	var txt= "确定提交？";
+	var option = {
+		title: "结算",
+		btn: parseInt("0011",2),
+		onOk: function(){
+			LayerShow('');
+			$.post('/stock/finance/add', {ids: ids}, function (data) {
+				LayerHide();
+				if (data.status == 1) {
+					window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.success);
+					setTimeout(function () {
+						window.location.href = '/stock/order/list';
+					}, 800);
+				} else {
+					return window.wxc.xcConfirm(data.message, window.wxc.xcConfirm.typeEnum.error);
+				}
+			});
+		},
+	}
+
+	window.wxc.xcConfirm(txt, "custom", option);
+	
+
+});
+
 </script>
 @stop
