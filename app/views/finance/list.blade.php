@@ -114,7 +114,7 @@ $(document).on('click', '.prt', function () {
 	var bhtml = $('body').html();
 	var phtml = $(this).parents('.finance_order').html();
 
-	phtml.replace('<button class="prt btn btn-info">打印</button>', '');
+	phtml.replace('/<button class="prt btn btn-info">打印</button>/', '');
 
 	$('body').html(phtml);
 	window.print();

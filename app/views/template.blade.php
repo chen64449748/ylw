@@ -110,44 +110,44 @@ function del() {
   
 
 </div>  
-  <script src="/js/jquery.js"></script>
-  <script src="/js/masonry-docs.min.js" type="text/javascript"></script>
-  <!-- <script src="/js/jquery.select2/select2.min.js" type="text/javascript"></script> -->
-  <!-- <script src="/js/jquery.parsley/dist/parsley.js" type="text/javascript"></script> -->
-  <script src="/js/bootstrap.slider/js/bootstrap-slider.js" type="text/javascript"></script>
-	<!-- <script type="text/javascript" src="/js/jquery.nanoscroller/jquery.nanoscroller.js"></script> -->
-	<!-- <script type="text/javascript" src="/js/jquery.nestable/jquery.nestable.js"></script> -->
-	<script type="text/javascript" src="/js/behaviour/general.js"></script>
-  <!-- <script src="/js/jquery.ui/jquery-ui.js" type="text/javascript"></script> -->
-	<!-- <script type="text/javascript" src="/js/bootstrap.switch/bootstrap-switch.js"></script> -->
-	<script type="text/javascript" src="/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-	<script type="text/javascript" src="/js/jquery.icheck/icheck.min.js"></script>
-  <!-- <script type="text/javascript" src="/js/bootstrap.daterangepicker/moment.min.js"></script> -->
-  <!-- <script type="text/javascript" src="/js/bootstrap.daterangepicker/daterangepicker.js"></script> -->
-  <script src="/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
-  <script src='/js/command.js' type="text/javascript"></script>
-  @yield('script')
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      //initialize the javascript
-      App.init();
-
-    });
-
-
-  </script>
-
-
-
-  <!-- Bootstrap core JavaScript
-  ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-    <!-- <script src="/js/behaviour/voice-commands.js"></script> -->
-  <script src="/js/bootstrap/dist/js/bootstrap.min.js"></script>
-  
 </body>
 
-<!-- Mirrored from condorthemes.com/cleanzone/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2013], Mon, 31 Mar 2014 14:35:34 GMT -->
+
 </html>
+<script src="/js/jquery.js"></script>
+<script src="/js/masonry-docs.min.js" type="text/javascript"></script>
+<!-- <script src="/js/jquery.select2/select2.min.js" type="text/javascript"></script> -->
+<!-- <script src="/js/jquery.parsley/dist/parsley.js" type="text/javascript"></script> -->
+<script src="/js/bootstrap.slider/js/bootstrap-slider.js" type="text/javascript"></script>
+<!-- <script type="text/javascript" src="/js/jquery.nanoscroller/jquery.nanoscroller.js"></script> -->
+<!-- <script type="text/javascript" src="/js/jquery.nestable/jquery.nestable.js"></script> -->
+<script type="text/javascript" src="/js/behaviour/general.js"></script>
+<!-- <script src="/js/jquery.ui/jquery-ui.js" type="text/javascript"></script> -->
+<!-- <script type="text/javascript" src="/js/bootstrap.switch/bootstrap-switch.js"></script> -->
+<script type="text/javascript" src="/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="/js/jquery.icheck/icheck.min.js"></script>
+<!-- <script type="text/javascript" src="/js/bootstrap.daterangepicker/moment.min.js"></script> -->
+<!-- <script type="text/javascript" src="/js/bootstrap.daterangepicker/daterangepicker.js"></script> -->
+<script src="/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+<script src='/js/command.js' type="text/javascript"></script>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    //initialize the javascript
+    App.init();
+
+  });
+
+
+</script>
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script src="/js/behaviour/voice-commands.js"></script> -->
+<script src="/js/bootstrap/dist/js/bootstrap.min.js"></script>
+@yield('script')
