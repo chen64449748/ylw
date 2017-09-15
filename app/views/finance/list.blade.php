@@ -113,10 +113,9 @@ $('#time').datetimepicker({
 $('.prt').on('click', function () {
 	var bhtml = $('body').html();
 	var phtml = $(this).parents('.finance_order').html();
+	var s_pt = phtml.replace('<button class="prt btn btn-info">打印</button>', '');
 
-	phtml = phtml.replace('/<button class="prt btn btn-info">打印</button>/', '');
-
-	$('body').html(phtml);
+	$('body').html(s_pt);
 	window.print();
 	$('body').html(bhtml);
 
