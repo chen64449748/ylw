@@ -110,7 +110,7 @@ $('#time').datetimepicker({
 	minView: 2,
 });
 
-$(document).on('click', '.prt', function () {
+$('.prt').on('click', function () {
 	var bhtml = $('body').html();
 	var phtml = $(this).parents('.finance_order').html();
 
