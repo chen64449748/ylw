@@ -377,9 +377,9 @@ class StockController extends BaseController
 				$finance_in['price'] += (float)$s_order->price_total;
 				$finance_in_detail[]['id'] = $s_order->id;
 			}
-
+			Finance::add($finance_in, $finance_in_detail);
 		}
-		Finance::add($finance_in, $finance_in_detail);
+		
 	}
 
 	private function outFinance($out) {
@@ -397,8 +397,8 @@ class StockController extends BaseController
 				$finance_out['price'] += (float)$s_order->price_total;
 				$finance_out_detail[]['id'] = $s_order->id;
 			}
-
+			Finance::add($finance_out, $finance_out_detail);
 		}
-		Finance::add($finance_out, $finance_out_detail);
+		
 	}
 }
