@@ -411,10 +411,10 @@ function checkall()
 			ac.prop('checked', f);
 			var ac_div = $(this).parent('.icheckbox_square-blue');
 
-			if (ac_div.hasClass('checked')) {
-				ac_div.removeClass('checked');
-			} else {
+			if (f) {
 				ac_div.addClass('checked');
+			} else {
+				ac_div.removeClass('checked');
 			}
 
 		});
