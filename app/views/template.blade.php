@@ -27,40 +27,7 @@
 
 <body>
 
-<script>
 
-function loadDiv(text) {
-     var div = "<div id='_layer_'> <div id='_MaskLayer_' style='filter: alpha(opacity=30); -moz-opacity: 0.3; opacity: 0.3;background-color: #000; width: 100%; height: 100%; z-index: 2147000001; position: fixed;" + "left: 0; top: 0; overflow: hidden; display: none'></div><div id='_wait_' style='z-index: 2147000002; position: fixed; width:430px;height:218px; display: none'  ><center><h3>" + "" + text + "<img src='/images/loading.gif' width=80 height=80 /></h3><button style='display: none;' class='btn btn-danger' onclick='LayerHide()'>关闭</button></center></div></div>"; 
-   return div; 
-}
-
-function LayerShow(text) {
-    var addDiv= loadDiv(text);  
-    var element = $(addDiv).appendTo(document.body);     $(window).resize(Position);  
-    var deHeight = $(document).height();    
-    var deWidth = $(document).width();    
-    Position();     
-    $("#_MaskLayer_").show();   
-    $("#_wait_").show();
-}
-
-function Position() {  
-    $("#_MaskLayer_").width($(document).width());   
-    var deHeight = $(window).height();     
-    var deWidth = $(window).width();     
-    $("#_wait_").css({ left: (deWidth - $("#_wait_").width()) / 2 + "px", top: (deHeight - $("#_wait_").height()) / 2 + "px" }); 
-}
-
-function LayerHide() { 
-    $("#_MaskLayer_").hide(); 
-    $("#_wait_").hide(); 
-    del(); 
-}
-
-function del() { 
-    var delDiv = document.getElementById("_layer_");     delDiv.parentNode.removeChild(delDiv); 
-}
-</script>
 
 <!-- Fixed navbar -->
 <div id="head-nav" style="height: 50px; line-height: 50px;" class="navbar navbar-default navbar-fixed-top">
@@ -142,7 +109,40 @@ function del() {
 
 
 </script>
+<script>
 
+function loadDiv(text) {
+     var div = "<div id='_layer_'> <div id='_MaskLayer_' style='filter: alpha(opacity=30); -moz-opacity: 0.3; opacity: 0.3;background-color: #000; width: 100%; height: 100%; z-index: 2147000001; position: fixed;" + "left: 0; top: 0; overflow: hidden; display: none'></div><div id='_wait_' style='z-index: 2147000002; position: fixed; width:430px;height:218px; display: none'  ><center><h3>" + "" + text + "<img src='/images/loading.gif' width=80 height=80 /></h3><button style='display: none;' class='btn btn-danger' onclick='LayerHide()'>关闭</button></center></div></div>"; 
+   return div; 
+}
+
+function LayerShow(text) {
+    var addDiv= loadDiv(text);  
+    var element = $(addDiv).appendTo(document.body);     $(window).resize(Position);  
+    var deHeight = $(document).height();    
+    var deWidth = $(document).width();    
+    Position();     
+    $("#_MaskLayer_").show();   
+    $("#_wait_").show();
+}
+
+function Position() {  
+    $("#_MaskLayer_").width($(document).width());   
+    var deHeight = $(window).height();     
+    var deWidth = $(window).width();     
+    $("#_wait_").css({ left: (deWidth - $("#_wait_").width()) / 2 + "px", top: (deHeight - $("#_wait_").height()) / 2 + "px" }); 
+}
+
+function LayerHide() { 
+    $("#_MaskLayer_").hide(); 
+    $("#_wait_").hide(); 
+    del(); 
+}
+
+function del() { 
+    var delDiv = document.getElementById("_layer_");     delDiv.parentNode.removeChild(delDiv); 
+}
+</script>
 
 
 <!-- Bootstrap core JavaScript
