@@ -55,6 +55,7 @@
 			公司：{{$item->company->company_name}}-{{$item->company->company_faren}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
 			品牌：{{$item->sign->company_sign}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
 			结算时间：{{$item->created_at}}
+			<button class="prt btn btn-info">打印</button>
 		</div>
 
 		<div>
@@ -109,5 +110,16 @@ $('#time').datetimepicker({
 	minView: 2,
 });
 
+$(document).on('click', '.prt', function () {
+	var bhtml = $('body').html();
+	var phtml = $(this).parents('.finance_order').html();
+
+	phtml.replace('<button class="prt btn btn-info">打印</button>', '');
+
+	$('body').html(phtml);
+	window.print();
+	$('body').html(bhtml);
+
+});
 </script>
 @stop
