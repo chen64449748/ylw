@@ -61,5 +61,9 @@ Route::group(array('before'=> 'login'), function() {
 
 	// 财务
 	Route::get('finance/list', array('as'=> 'finance.list', 'uses'=> 'FinanceController@financeList'));
+	// 员工添加
+	Route::any('employee/add', array('as' => 'employee.add', 'uses' => 'EmployeeController@add'));
+	// 工种添加
+	Route::any('employee_type/add', array('as' => 'employee_type.add', 'uses' => 'EmployeeTypeController@add'));
 });
 

@@ -3,20 +3,6 @@
 
 class Employee extends Eloquent
 {
-	protected $table = 'price';
+	protected $table = 'employee';
 
-	public function skuPrices()
-	{
-		return $this->hasMany('SkuPrice', 'price_id', 'id');
-	}
-
-	public function stock()
-	{
-		return $this->hasOne('Stock', 'price_id', 'id');
-	}
-
-	public function goods()
-	{
-		return $this->belongsTo('Goods', 'goods_id', 'id');
-	}
 }

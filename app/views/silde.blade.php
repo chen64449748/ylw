@@ -41,5 +41,6 @@
 <li><a href="#"><i class="fa fa-list-alt"></i><span>员工</span></a>
 	<ul class="sub-menu">
 		<li @if ($action == 'finance/list') class="active" @endif><a href="/finance/list" >财务列表</a></li>
+		<li @if ($action == 'employee/add') class="active" @endif><a href="/employee/add" >员工添加</a></li>
 	</ul>
 </li>
