@@ -63,6 +63,7 @@ Route::group(array('before'=> 'login'), function() {
 	Route::get('finance/list', array('as'=> 'finance.list', 'uses'=> 'FinanceController@financeList'));
 	// 员工添加
 	Route::any('employee/add', array('as' => 'employee.add', 'uses' => 'EmployeeController@add'));
+	Route::get('employee/list', array('as'=> 'employee.list', 'uses'=> 'EmployeeController@employeeList'));
 	// 工种添加
 	Route::any('employee_type/add', array('as' => 'employee_type.add', 'uses' => 'EmployeeTypeController@add'));
 });

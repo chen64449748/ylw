@@ -21,6 +21,28 @@ class EmployeeController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
+	
+    public function employeeList()
+	{
+	    $employee_m = new Employee();
+
+	    $company_m = new Company();
+	    
+	    $type = array();
+	    
+	    $id = Input::get('id', '');
+	    
+	    
+	    $id && $type['id'] = $id;
+	    
+	    $employee = $employee_m->getListPage($type);
+
+		$view_data = array(
+			'employee' => $employee,
+		);
+		return View::make('employee.list', $view_data);
+	}
+	
 
 	public function add(){
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
